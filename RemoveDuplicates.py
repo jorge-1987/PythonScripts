@@ -43,8 +43,8 @@ def SearchDuplicates(Source,Duplicates):
     #Search for duplicates in the md5 of the ListaDuplicatesGen and put the file string in DuplicatesList
     SourceDirLen = len(SourceListDic.keys())
     DuplicatesDirLen = len(DuplicatesListDic.keys())
-    print "El directorio Origen tiene: " + str(len(SourceListDic.keys())) + " Archivos"
-    print "El directorio para buscar duplicados tiene: " + str(len(DuplicatesListDic.keys())) + " Archivos"
+    print "The origin folder has: " + str(len(SourceListDic.keys())) + " files"
+    print "The folder to search duplicated files has: " + str(len(DuplicatesListDic.keys())) + " files"
     print "" 
     
     for x in range(0, SourceDirLen):
@@ -59,21 +59,21 @@ def SearchDuplicates(Source,Duplicates):
 def DuplicatesList():
     Duplicateslen = len(DuplicatesListD)
     if (Duplicateslen == 0):
-        print "No existen archivos duplicados del directorio origen en el directorio destino"
+        print "There is no duplicated files in the folder."
         print "" 
     else: 
-        print "En la carpeta destino se encontraron los siguientes archivos que ya existen en la carpeta de origen: "
+        print "In the destination folder there is some duplicated files as list below: "
         print "" 
         for z in range(0, Duplicateslen):
-            print "Archivo origen: "
+            print "Origin file: "
             print DuplicatesListO[z]
-            print "Duplicado en destino como: "
+            print "Duplicated in destiny folder as: "
             print DuplicatesListD[z]
             print "" 
         #print SourceListDic
     
 def DeleteDuplicates():
-    print "Se eliminaran los duplicados."
+    print "Deleted duplicated files."
     count = 0
     Duplicateslen = len(DuplicatesListD)
     for z in range(0, Duplicateslen):
@@ -81,13 +81,13 @@ def DeleteDuplicates():
             os.remove(DuplicatesListD[z])
             count = count+1
             
-    print "Se eliminaron: " + str(count) + " archivos." 
+    print "Deleted : " + str(count) + " files." 
     print "" 
     #print SourceListDic
     
     
 def main(folderSource,folderDuplicates):
-    print "Bienvenido a RemoveDuplicates."
+    print "Welcome to RemoveDuplicates."
     print "" 
     #Ask if the user wants to print the list, or delete the duplicates.
     opt = 9
