@@ -1,4 +1,5 @@
-#En Windows no se si va el /usr/bin,etc...
+#!/usr/bin/env python
+#En Windows no se afecta el /usr/bin,etc...
 import os
 import sys
 import hashlib
