@@ -92,12 +92,12 @@ def main(folderSource,folderDuplicates):
     #Ask if the user wants to print the list, or delete the duplicates.
     opt = 9
     while (opt != 0):
-        print '1) Buscar y listar duplicados.'
-        print '2) Buscar, listar y Eliminar duplicados.'
-        print '3) Buscar y Eliminar duplicados.'
-        print '0) Salir.'
+        print '1) Find and List duplicated files.'
+        print '2) Find, List and Delete duplicated files.'
+        print '3) Find and Delete duplicated files.'
+        print '0) Exit.'
         print "" 
-        opt = input("Su seleccion: ")
+        opt = input("Input your choice: ")
         print ""
         if (opt==1):
             SearchDuplicates(folderSource,folderDuplicates)
