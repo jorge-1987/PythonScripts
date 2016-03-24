@@ -8,6 +8,7 @@ SourceListDic = {}
 DuplicatesListDic = {}
 DuplicatesListO = []
 DuplicatesListD = []
+Silent = 0
 
 #From Stackoverflow
 #http://stackoverflow.com/questions/3431825/generating-a-md5-checksum-of-a-file
@@ -43,12 +44,13 @@ def SearchDuplicates(Source,Duplicates):
     #Search for duplicates in the md5 of the ListaDuplicatesGen and put the file string in DuplicatesList
     SourceDirLen = len(SourceListDic.keys())
     DuplicatesDirLen = len(DuplicatesListDic.keys())
-    print "The origin folder has: " + str(len(SourceListDic.keys())) + " files"
-    print "The folder to search duplicated files has: " + str(len(DuplicatesListDic.keys())) + " files"
+    print "The origin folder has: " + str(SourceDirLen) + " files"
+    print "The folder to search duplicated files has: " + str(DuplicatesDirLen) + " files"
     print "" 
     
     for x in range(0, SourceDirLen):
-        #print str(x)
+        if (Silent == 0):
+            print str(x) + "/" + str(SourceDirLen)
         for y in range(0, DuplicatesDirLen):
             if (SourceListDic[SourceListDic.keys()[x]] == DuplicatesListDic[DuplicatesListDic.keys()[y]]):
                 #print "Son iguales."
