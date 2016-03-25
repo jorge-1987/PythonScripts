@@ -24,7 +24,6 @@ def ListaSourceGen(dir):
     Sourcelist = []
     for root, dirs, files in os.walk(dir):
         for file in files:
-            #print(os.path.join(root, file))
             SourceListDic[str(os.path.join(root, file))] = md5(os.path.join(root, file))
              
 #Based from an answer in Stackoverflow
@@ -32,7 +31,6 @@ def ListaSourceGen(dir):
 def ListaDuplicatesGen(dir):
     for root, dirs, files in os.walk(dir):
         for file in files:
-            #print(os.path.join(root, file))
             DuplicatesListDic[str(os.path.join(root, file))] = md5(os.path.join(root, file))
             
 def SearchDuplicates(Source,Duplicates):
@@ -52,11 +50,9 @@ def SearchDuplicates(Source,Duplicates):
             print str(x) + "/" + str(SourceDirLen)
         for y in range(0, DuplicatesDirLen):
             if (SourceListDic[SourceListDic.keys()[x]] == DuplicatesListDic[DuplicatesListDic.keys()[y]]):
-                #print "Son iguales."
                 DuplicatesListO.append(SourceListDic.keys()[x])
                 DuplicatesListD.append(DuplicatesListDic.keys()[y])
-                #DuplicatesList.append("x")
-                
+
 def DuplicatesList():
     Duplicateslen = len(DuplicatesListD)
     if (Duplicateslen == 0):
@@ -71,7 +67,7 @@ def DuplicatesList():
             print "Duplicated in destiny folder as: "
             print DuplicatesListD[z]
             print "" 
-        #print SourceListDic
+
     
 def DeleteDuplicates():
     print "Deleted duplicated files."
@@ -84,8 +80,7 @@ def DeleteDuplicates():
             
     print "Deleted : " + str(count) + " files." 
     print "" 
-    #print SourceListDic
-    
+
     
 def main(folderSource,folderDuplicates):
     print "Welcome to RemoveDuplicates."
@@ -114,5 +109,4 @@ def main(folderSource,folderDuplicates):
     print "" 
     print "Good Bye!"
 
-    
 main(str(sys.argv[1]),str(sys.argv[2]))
