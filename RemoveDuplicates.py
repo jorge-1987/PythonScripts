@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-#This is my first Python Script, I dont know how #!/usr/bin... affects in Windows
 import os
 import sys
 import hashlib
