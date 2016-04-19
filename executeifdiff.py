@@ -33,30 +33,9 @@ def ExecuteIfDiff():
 
     
 def main(folderSource,folderDuplicates):
-    print "Welcome to RemoveDuplicates."
-    print "" 
-    #Ask if the user wants to print the list, or delete the duplicates.
-    opt = 9
-    while (opt != 0):
-        print '1) Find and List duplicated files.'
-        print '2) Find, List and Delete duplicated files.'
-        print '3) Find and Delete duplicated files.'
-        print '0) Exit.'
-        print "" 
-        opt = input("Input your choice: ")
-        print ""
-        if (opt==1):
-            SearchDuplicates(folderSource,folderDuplicates)
-            DuplicatesList()
-        elif (opt==2):
-            SearchDuplicates(folderSource,folderDuplicates)
-            DuplicatesList()
-            DeleteDuplicates()
-        elif (opt==3):
-            SearchDuplicates(folderSource,folderDuplicates)
-            DeleteDuplicates()
+    #Compare the two files by MD5.
     
-    print "" 
-    print "Good Bye!"
+    #Execute what is needed if there are differences
+    
 
 main(str(sys.argv[1]),str(sys.argv[2]))
