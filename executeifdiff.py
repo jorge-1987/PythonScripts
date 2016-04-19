@@ -3,36 +3,17 @@ import os
 import sys
 import hashlib
 
-
-Silent = 0
-
 #From Stackoverflow
 #http://stackoverflow.com/questions/3431825/generating-a-md5-checksum-of-a-file
-def md5(fname):
+def GenMd5(fname):
     hash_md5 = hashlib.md5()
     with open(fname, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
     
-#Based from an answer in Stackoverflow
-#http://stackoverflow.com/questions/3964681/find-all-files-in-directory-with-extension-txt-in-python
-def ListaSourceGen(dir):
-    Sourcelist = []
-    for root, dirs, files in os.walk(dir):
-        for file in files:
-            SourceListDic[str(os.path.join(root, file))] = md5(os.path.join(root, file))
-             
 
-            
-def SearchDuplicates(Source,Duplicates):
-        #List files and make their md5 hash
-    ListaSourceGen(Source)
-    ListaDuplicatesGen(Duplicates)
-    
-    
-
-def DuplicatesList():
+def ExecuteIfDiff():
     Duplicateslen = len(DuplicatesListD)
     if (Duplicateslen == 0):
         print "There is no duplicated files in the folder."
