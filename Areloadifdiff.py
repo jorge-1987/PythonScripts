@@ -16,8 +16,7 @@ def GenMd5(fname):
 def ExecuteIfDiff(filenew,filebackup):
     if (os.path.isfile(filenew) and os.path.isfile(filebackup)):
         if (GenMd5(filenew) != GenMd5(filebackup)):
-        print "There is no duplicated files in the folder."
-        print "" 
+            os.system("some_command with args")
 
     
 def main(folderSource,folderDuplicates):
