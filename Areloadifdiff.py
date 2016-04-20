@@ -16,10 +16,10 @@ def GenMd5(fname):
 def ExecuteIfDiff(filenew,filebackup):
     if (os.path.isfile(filenew) and os.path.isfile(filebackup)):
         if (GenMd5(filenew) != GenMd5(filebackup)):
-            os.system("some_command with args")
+            os.system("/etc/init.d/apache2 reload")
 
     
-def main(folderSource,folderDuplicates):
+def main(filenew,filebackup):
     #Compare the two files by MD5.
     
     #Execute what is needed if there are differences
