@@ -13,23 +13,11 @@ def GenMd5(fname):
     return hash_md5.hexdigest()
     
 
-def ExecuteIfDiff():
-    Duplicateslen = len(DuplicatesListD)
-    if (Duplicateslen == 0):
+def ExecuteIfDiff(filenew,filebackup):
+    if (os.path.isfile(filenew) and os.path.isfile(filebackup)):
+        if (GenMd5(filenew) != GenMd5(filebackup)):
         print "There is no duplicated files in the folder."
         print "" 
-    else: 
-        print "In the destination folder there is some duplicated files as list below: "
-        print "" 
-        for z in range(0, Duplicateslen):
-            print "Origin file: "
-            print DuplicatesListO[z]
-            print "Duplicated in destiny folder as: "
-            print DuplicatesListD[z]
-            print "" 
-
-    
-
 
     
 def main(folderSource,folderDuplicates):
