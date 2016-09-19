@@ -73,24 +73,24 @@ def DeleteDuplicates():
     print (" ")
 
 def main(folderSource,folderDuplicates):
-    print ("Welcome to RemoveDuplicates.")
-    print (" ")
+	print ("Welcome to RemoveDuplicates.")
+	print (" ")
 	#Ask if the user wants to print the list, or delete the duplicates, etc...
-    opt = 9
-    while (opt != 0):
-        print ('1) Find, List, and delete duplicated files.')
-        print ('0) Exit.')
-        print (" ")
-        opt = input("Input your choice: ")
-        print (" ")
-        if (opt == 1): 
+	opt = 9
+	while opt != 0:
+		print (opt)
+		print ('1) Find, List, and delete duplicated files.')
+		print ('0) Exit.')
+		print (" ")
+		opt = input("Input your choice: ")
+		print ("You selected: " + str(opt))
+		if opt == 1:
 			ListaLevel1(folderSource, SourceListDic)
 			ListaLevel1(folderDuplicates, DuplicatesListDic)
 			SearchDuplicates()
 			DuplicatesList()
 			DeleteDuplicates()
-
 	print(" ")
-    print("Good Bye!")
+	print("Good Bye!")
 
 main(str(sys.argv[1]), str(sys.argv[2]))
