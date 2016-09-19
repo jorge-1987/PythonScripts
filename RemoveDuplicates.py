@@ -77,14 +77,14 @@ def main(folderSource,folderDuplicates):
 	print (" ")
 	#Ask if the user wants to print the list, or delete the duplicates, etc...
 	opt = 9
-	while opt != 0:
+	while int(opt) != 0:
 		print (opt)
 		print ('1) Find, List, and delete duplicated files.')
 		print ('0) Exit.')
 		print (" ")
 		opt = input("Input your choice: ")
 		print ("You selected: " + str(opt))
-		if opt == 1:
+		if int(opt) == 1:
 			ListaLevel1(folderSource, SourceListDic)
 			ListaLevel1(folderDuplicates, DuplicatesListDic)
 			SearchDuplicates()
