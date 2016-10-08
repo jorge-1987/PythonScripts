@@ -28,22 +28,23 @@ def ListaLevel1(Dir,Lista):
 		if len(subdirList) > 0:
 			del subdirList[:]
 			
-
+            
 def SearchDuplicates():
-	#List files and make their md5 hash
-	#Search for duplicates in the md5 of the ListaDuplicatesGen and put the file string in DuplicatesList
+    #List files and make their md5 hash
+    #Search for duplicates in the md5 of the ListaDuplicatesGen and put the file string in DuplicatesList
     SourceDirLen = len(SourceListDic.keys())
     DuplicatesDirLen = len(DuplicatesListDic.keys())
     print ("The origin folder has: " + str(SourceDirLen) + " files")
     print ("The folder to search duplicated files has: " + str(DuplicatesDirLen) + " files")
     print (" ") 
+    
     for x in range(0, SourceDirLen):
         if (Silent == 0):
             print (str(x) + "/" + str(SourceDirLen))
         for y in range(0, DuplicatesDirLen):
-            if (SourceListDic[SourceListDic.keys()[x]] == DuplicatesListDic[DuplicatesListDic.keys()[y]]):
-                DuplicatesListO.append(SourceListDic.keys()[x])
-                DuplicatesListD.append(DuplicatesListDic.keys()[y])
+            if (SourceListDic[list(SourceListDic.keys())[x]] == DuplicatesListDic[list(DuplicatesListDic.keys())[y]]):
+                DuplicatesListO.append(list(SourceListDic.keys())[x])
+                DuplicatesListD.append(list(DuplicatesListDic.keys())[y])
 
 def DuplicatesList():
     Duplicateslen = len(DuplicatesListD)
@@ -75,22 +76,14 @@ def DeleteDuplicates():
 def main(folderSource,folderDuplicates):
 	print ("Welcome to RemoveDuplicates.")
 	print (" ")
-	#Ask if the user wants to print the list, or delete the duplicates, etc...
-	opt = 9
-	while int(opt) != 0:
-		print (opt)
-		print ('1) Find, List, and delete duplicated files.')
-		print ('0) Exit.')
-		print (" ")
-		opt = input("Input your choice: ")
-		print ("You selected: " + str(opt))
-		if int(opt) == 1:
-			ListaLevel1(folderSource, SourceListDic)
-			ListaLevel1(folderDuplicates, DuplicatesListDic)
-			SearchDuplicates()
-			DuplicatesList()
-			DeleteDuplicates()
-	print(" ")
-	print("Good Bye!")
+    #Ask if the user wants to print the list, or delete the duplicates, etc...
+	print ('Find, List, and delete duplicated files.')
+	ListaLevel1(folderSource, SourceListDic)
+	ListaLevel1(folderDuplicates, DuplicatesListDic)
+	SearchDuplicates()
+	DuplicatesList()
+	DeleteDuplicates()
+	print (" ")
+	print ("Good Bye!")
 
 main(str(sys.argv[1]), str(sys.argv[2]))
