@@ -14,12 +14,12 @@ def checkversion(versionstring):
 #        if (x == 0):
     try:
         major = int(versionstring[startpos:dot])
-    else:
+    except:
         major = versionstring[startpos:dot]
         print(major + " not a major version number.")
         exit(1)
 
-    print("major:")
+    print("Major ok:")
     print(major)
 
     versionstring = versionstring.replace('.',' ',1)
@@ -28,8 +28,14 @@ def checkversion(versionstring):
 #    print("Version String:")
 #    print(versionstring)
     dot = versionstring.find('.')
-    minor = versionstring[startpos:dot]
-    print("minor:")
+    try:
+        minor = int(versionstring[startpos:dot])
+    except:
+        minor = versionstring[startpos:dot]
+        print(minor + " not a minor version number.")
+        exit(1)
+
+    print("Minor ok:")
     print(minor)
 
 #    dot = versionstring.find('.')            
@@ -41,15 +47,27 @@ def checkversion(versionstring):
     versionstring = versionstring.replace('.',' ',1)
     endstr = len(versionstring)
     if (dash > 1):
-        fix = versionstring[startpos:dash]        
-        print("Fix:")
+        try:
+            fix = int(versionstring[startpos:dash])
+        except:
+            fix = versionstring[startpos:dash]
+            print(fix + " not a fix version number.")
+            exit(1)
+
+        print("Fix ok:")
         print(fix)
         startpos = dash + 1
         release = versionstring[startpos:endstr]
         print("Release:")
         print(release)
     else:
-        fix = versionstring[startpos:endstr]
+        try:
+            fix = int(versionstring[startpos:endstr])
+        except:
+            fix = versionstring[startpos:endstr]
+            print(fix + " not a fix version number.")
+            exit(1)
+
         print("Fix:")
         print(fix)
 
