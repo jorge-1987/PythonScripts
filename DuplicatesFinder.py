@@ -2,12 +2,17 @@
 import os
 import sys
 import hashlib
+import getopt
 
 SourceListDic = {}
 DuplicatesListDic = {}
 DuplicatesListO = []
 DuplicatesListD = []
 Silent = 0
+
+def usage():
+  print("Find duplicates files between an origin, and a destination where the duplicates should NOT be")
+  print("DeplicatesFinder.py -o /home/joe/importantfilesdirectory -d /tmp/mixoffilestobedeleted")
 
 #From Stackoverflow
 #http://stackoverflow.com/questions/3431825/generating-a-md5-checksum-of-a-file
@@ -35,13 +40,13 @@ def SearchDuplicates():
     #Search for duplicates in the md5 of the ListaDuplicatesGen and put the file string in DuplicatesList
     SourceDirLen = len(SourceListDic.keys())
     DuplicatesDirLen = len(DuplicatesListDic.keys())
-    print "The origin folder has: " + str(SourceDirLen) + " files"
-    print "The folder to search duplicated files has: " + str(DuplicatesDirLen) + " files"
-    print "" 
+    print ("The origin folder has: " + str(SourceDirLen) + " files")
+    print ("The folder to search duplicated files has: " + str(DuplicatesDirLen) + " files")
+    print ("")
     
     for x in range(0, SourceDirLen):
         if (Silent == 0):
-            print str(x) + "/" + str(SourceDirLen)
+            print (str(x) + "/" + str(SourceDirLen))
         for y in range(0, DuplicatesDirLen):
             if (SourceListDic[SourceListDic.keys()[x]] == DuplicatesListDic[DuplicatesListDic.keys()[y]]):
                 DuplicatesListO.append(SourceListDic.keys()[x])
@@ -50,20 +55,20 @@ def SearchDuplicates():
 def DuplicatesList():
     Duplicateslen = len(DuplicatesListD)
     if (Duplicateslen == 0):
-        print "There is no duplicated files in the folder."
-        print "" 
+        print ("There is no duplicated files in the folder.")
+        print ("")
     else: 
-        print "In the destination folder there is some duplicated files as list below: "
-        print "" 
+        print ("In the destination folder there is some duplicated files as list below: ")
+        print ("")
         for z in range(0, Duplicateslen):
-            print "Origin file: "
-            print DuplicatesListO[z]
-            print "Duplicated in destiny folder as: "
-            print DuplicatesListD[z]
-            print "" 
+            print ("Origin file: ")
+            print (DuplicatesListO[z])
+            print ("Duplicated in destiny folder as: ")
+            print (DuplicatesListD[z])
+            print ("")
 
 def DeleteDuplicates():
-    print "Deleted duplicated files."
+    print ("Deleted duplicated files.")
     count = 0
     Duplicateslen = len(DuplicatesListD)
     for z in range(0, Duplicateslen):
@@ -71,5 +76,43 @@ def DeleteDuplicates():
             os.remove(DuplicatesListD[z])
             count = count+1
             
-    print "Deleted : " + str(count) + " files." 
-    print "" 
+    print ("Deleted : " + str(count) + " files.")
+    print ("")
+
+def main():
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "ho:d:")
+    except getopt.GetoptError as err:
+        # print help information and exit:
+        print (str(err))  # will print something like "option -a not recognized"
+        usage()
+        sys.exit(2)
+
+    origin = ""
+    duplicates = ""
+
+    for o, a in opts:
+        if o == "-o":
+            origin = a
+        elif o in ("-h"):
+            usage()
+            sys.exit()
+        elif o == "-d":
+            duplicates = a
+        else:
+            assert False, "unhandled option"
+
+    if (origin == ""):
+      print("A valid Original files directory not set with -o")
+      usage()
+      sys.exit(2)
+
+    if (duplicates == ""):
+      print("A valid Duplicated files directory not set with -d")
+      usage()
+      sys.exit(2)
+
+    print("Starting the search")
+
+if __name__ == "__main__":
+    main()
