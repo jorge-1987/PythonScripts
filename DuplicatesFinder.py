@@ -29,7 +29,7 @@ def ListaLevel1(Dir,Lista):
 		#print('Found directory: %s' % dirName)
 		for fname in fileList:
 			#print str(dirName)+str(fname)
-			Lista[str(dirName)+"\\"+str(fname)] = md5(str(dirName)+"\\"+str(fname))
+			Lista[str(dirName)+"/"+str(fname)] = md5(str(dirName)+"/"+str(fname))
 		if len(subdirList) > 0:
 			del subdirList[:]
 			
@@ -113,6 +113,13 @@ def main():
       sys.exit(2)
 
     print("Starting the search")
+    print("Origin files directory: " + origin)
+    print("Duplicated files directory: " + duplicates)
+
+    ListaLevel1(origin,SourceListDic)
+    ListaLevel1(duplicates,DuplicatesListDic)
+    SearchDuplicates()
+
 
 if __name__ == "__main__":
     main()
