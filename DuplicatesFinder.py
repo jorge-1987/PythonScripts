@@ -35,22 +35,21 @@ def ListaLevel1(Dir,Lista):
 			
             
 def SearchDuplicates():
-        #List files and make their md5 hash
-    
+    #List files and make their md5 hash
     #Search for duplicates in the md5 of the ListaDuplicatesGen and put the file string in DuplicatesList
     SourceDirLen = len(SourceListDic.keys())
     DuplicatesDirLen = len(DuplicatesListDic.keys())
     print ("The origin folder has: " + str(SourceDirLen) + " files")
     print ("The folder to search duplicated files has: " + str(DuplicatesDirLen) + " files")
-    print ("")
+    print (" ") 
     
     for x in range(0, SourceDirLen):
         if (Silent == 0):
             print (str(x) + "/" + str(SourceDirLen))
         for y in range(0, DuplicatesDirLen):
-            if (SourceListDic[SourceListDic.keys()[x]] == DuplicatesListDic[DuplicatesListDic.keys()[y]]):
-                DuplicatesListO.append(SourceListDic.keys()[x])
-                DuplicatesListD.append(DuplicatesListDic.keys()[y])
+            if (SourceListDic[list(SourceListDic.keys())[x]] == DuplicatesListDic[list(DuplicatesListDic.keys())[y]]):
+                DuplicatesListO.append(list(SourceListDic.keys())[x])
+                DuplicatesListD.append(list(DuplicatesListDic.keys())[y])
 
 def DuplicatesList():
     Duplicateslen = len(DuplicatesListD)
@@ -80,6 +79,9 @@ def DeleteDuplicates():
     print ("")
 
 def main():
+    commflag = False
+    comm = ""
+
     try:
         opts, args = getopt.getopt(sys.argv[1:], "ho:d:")
     except getopt.GetoptError as err:
@@ -119,6 +121,25 @@ def main():
     ListaLevel1(origin,SourceListDic)
     ListaLevel1(duplicates,DuplicatesListDic)
     SearchDuplicates()
+    if (len(DuplicatesListD) > 0):
+      print(str(len(DuplicatesListD)) + " duplicates found.")
+      print("Enter L to list them, D to delete them, E to exit")
+
+      while commflag == False:
+        comm = input("L, D or E? : ")
+
+        if (comm == "E"):
+          commflag = True
+          print("Bye bye!")
+
+        if (comm == "L"):
+          print("List:")
+          DuplicatesList()
+
+        if (comm == "D"):
+          commflag = True
+          print("Deleting:")
+
 
 
 if __name__ == "__main__":
