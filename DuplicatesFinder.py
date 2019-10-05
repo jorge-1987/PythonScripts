@@ -139,7 +139,10 @@ def main():
         if (comm == "D"):
           commflag = True
           print("Deleting:")
-
+          DeleteDuplicates()
+          print("Deleting finished:")
+    else:
+      print("There is no files duplicated in " + duplicates)
 
 
 if __name__ == "__main__":
