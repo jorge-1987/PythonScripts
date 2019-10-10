@@ -4,11 +4,15 @@ import sys
 import hashlib
 import getopt
 
+import multiprocessing
+import time
+
 SourceListDic = {}
 DuplicatesListDic = {}
-DuplicatesListO = []
-DuplicatesListD = []
+
+
 Silent = 0
+
 
 def usage():
   print("Find duplicates files between an origin, and a destination where the duplicates should NOT be")
@@ -32,8 +36,21 @@ def ListaLevel1(Dir,Lista):
 			Lista[str(dirName)+"/"+str(fname)] = md5(str(dirName)+"/"+str(fname))
 		if len(subdirList) > 0:
 			del subdirList[:]
-			
-            
+
+#FUNCION CONCURRENTE
+def SearchDuplicatesC(X):
+    if str(X).endswith('0'):
+      print(str(X))
+    SourceDirLen = len(SourceListDic.keys())
+    DuplicatesDirLen = len(DuplicatesListDic.keys())
+    for y in range(0, DuplicatesDirLen):
+      if (SourceListDic[list(SourceListDic.keys())[X]] == DuplicatesListDic[list(DuplicatesListDic.keys())[y]]):
+        print("Duplicado")
+        print(list(SourceListDic.keys())[X])
+        print(list(DuplicatesListDic.keys())[y])
+
+
+
 def SearchDuplicates():
     #List files and make their md5 hash
     #Search for duplicates in the md5 of the ListaDuplicatesGen and put the file string in DuplicatesList
@@ -43,14 +60,9 @@ def SearchDuplicates():
     print ("The folder to search duplicated files has: " + str(DuplicatesDirLen) + " files")
     print (" ") 
     
-    for x in range(0, SourceDirLen):
-        if (Silent == 0):
-            print (str(x) + "/" + str(SourceDirLen))
 
-        for y in range(0, DuplicatesDirLen):
-            if (SourceListDic[list(SourceListDic.keys())[x]] == DuplicatesListDic[list(DuplicatesListDic.keys())[y]]):
-                DuplicatesListO.append(list(SourceListDic.keys())[x])
-                DuplicatesListD.append(list(DuplicatesListDic.keys())[y])
+    with multiprocessing.Pool() as pool:
+      pool.map(SearchDuplicatesC, range(0, SourceDirLen))
 
 def DuplicatesList():
     Duplicateslen = len(DuplicatesListD)
@@ -119,33 +131,27 @@ def main():
     print("Origin files directory: " + origin)
     print("Duplicated files directory: " + duplicates)
 
-    ListaLevel1(origin,SourceListDic)
-    ListaLevel1(duplicates,DuplicatesListDic)
+    print("What to do with the duplicates found?")
+    print("Enter L to list them and send them to a Logfile, D to delete them, E to exit")
 
-    SearchDuplicates()
+    while commflag == False:
+      comm = input("L, D or E? : ")
+      if (comm == "E"):
+        commflag = True
+        print("Bye bye!")
+      if (comm == "L"):
+        print("List:")
+        ListaLevel1(origin,SourceListDic)
+        ListaLevel1(duplicates,DuplicatesListDic)
+        SearchDuplicates()
+      if (comm == "D"):
+        commflag = True
+        print("Search and Destroy:")
+        ListaLevel1(origin,SourceListDic)
+        ListaLevel1(duplicates,DuplicatesListDic)
+        SearchDuplicates()
+        print("Deleting finished!")
 
-    if (len(DuplicatesListD) > 0):
-      print(str(len(DuplicatesListD)) + " duplicates found.")
-      print("Enter L to list them, D to delete them, E to exit")
-
-      while commflag == False:
-        comm = input("L, D or E? : ")
-
-        if (comm == "E"):
-          commflag = True
-          print("Bye bye!")
-
-        if (comm == "L"):
-          print("List:")
-          DuplicatesList()
-
-        if (comm == "D"):
-          commflag = True
-          print("Deleting:")
-          DeleteDuplicates()
-          print("Deleting finished:")
-    else:
-      print("There is no files duplicated in " + duplicates)
 
 
 if __name__ == "__main__":
