@@ -11,11 +11,11 @@ SourceListDic = {}
 DuplicatesListDic = {}
 
 
-Silent = 0
+Delete = False
 
 
 def usage():
-  print("Find duplicates files between an origin, and a destination where the duplicates should NOT be")
+  print("Find duplicates files between an origin and a destination where the duplicates should NOT be using concurrents")
   print("DeplicatesFinder.py -o /home/joe/importantfilesdirectory -d /tmp/mixoffilestobedeleted")
 
 #From Stackoverflow
@@ -46,8 +46,13 @@ def SearchDuplicatesC(X):
     for y in range(0, DuplicatesDirLen):
       if (SourceListDic[list(SourceListDic.keys())[X]] == DuplicatesListDic[list(DuplicatesListDic.keys())[y]]):
         print("Duplicado")
-        print(list(SourceListDic.keys())[X])
-        print(list(DuplicatesListDic.keys())[y])
+        print(str(X))
+        print(str(list(SourceListDic.keys())[X]))
+        if Delete:
+          if (os.path.isfile(str(list(DuplicatesListDic.keys())[y]))):
+            print("Deleting:")
+            print(str(list(DuplicatesListDic.keys())[y]))
+            os.remove(str(list(DuplicatesListDic.keys())[y]))
 
 
 
@@ -59,8 +64,6 @@ def SearchDuplicates():
     print ("The origin folder has: " + str(SourceDirLen) + " files")
     print ("The folder to search duplicated files has: " + str(DuplicatesDirLen) + " files")
     print (" ") 
-    
-
     with multiprocessing.Pool() as pool:
       pool.map(SearchDuplicatesC, range(0, SourceDirLen))
 
@@ -78,22 +81,10 @@ def DuplicatesList():
             print ("Duplicated in destiny folder as: ")
             print (DuplicatesListD[z])
             print ("")
-
-def DeleteDuplicates():
-    print ("Deleted duplicated files.")
-    count = 0
-    Duplicateslen = len(DuplicatesListD)
-    for z in range(0, Duplicateslen):
-        if (os.path.isfile(DuplicatesListD[z])):
-            os.remove(DuplicatesListD[z])
-            count = count+1
-            
-    print ("Deleted : " + str(count) + " files.")
-    print ("")
-
 def main():
     commflag = False
     comm = ""
+    global Delete
 
     try:
         opts, args = getopt.getopt(sys.argv[1:], "ho:d:")
@@ -144,8 +135,10 @@ def main():
         ListaLevel1(origin,SourceListDic)
         ListaLevel1(duplicates,DuplicatesListDic)
         SearchDuplicates()
+        print("List finished!")
       if (comm == "D"):
         commflag = True
+        Delete = True
         print("Search and Destroy:")
         ListaLevel1(origin,SourceListDic)
         ListaLevel1(duplicates,DuplicatesListDic)
