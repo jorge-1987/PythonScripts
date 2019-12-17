@@ -61,15 +61,10 @@ def main():
 	timestamp = str(now.year) +'-'+ str(now.month) +'-'+ str(now.day) +'-'+ str(now.hour) +'-'+ str(now.minute) +'-'+ str(now.second)
 	notable = "notabletodelete."+timestamp+".log"
 	fnot = open(notable, 'w')
-	dia = ""
 
 	for f in file:
 		for y in range(31):
-			if (y+1) <= 9:
-				dia = "0"+str((y+1))
-			else:
-				dia = str((y+1))
-			fullpath = path+"/"+dia+"/"+f.strip('\n')
+			fullpath = path+"/"+(y+1).zfill(2)+"/"+f.strip('\n')
 			#print(fullpath)
 			obj = s3.Object(bucket, fullpath)
 			try:
